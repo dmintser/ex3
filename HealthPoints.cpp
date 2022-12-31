@@ -62,6 +62,6 @@ bool operator>=(const HealthPoints &hp1, const HealthPoints &hp2) {
 
 // iostream operator overloading
 std::ostream &operator<<(std::ostream &os, const HealthPoints &hp) {
-  os << hp.m_hp;
+  os << hp.m_hp << '(' << hp.m_maxHP << ')';
   return os;
 }
