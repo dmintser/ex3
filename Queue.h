@@ -22,15 +22,15 @@ private:
   int m_size;
 };
 
-template <class T> Queue<T>::Queue() : m_queue(new Node<T>) {
-  m_queue->next = nullptr;
-}
-
 template <class T> Queue<T> filter(const Queue<T> &);
 
 template <class T> Queue<T> transform(const Queue<T> &);
 
 // iterators
+
+template <class T> Queue<T>::Queue() : m_queue(new Node<T>), m_size(0) {
+  m_queue->next = nullptr;
+}
 
 template <class T> Queue<T>::~Queue() {
   while (m_queue) {
