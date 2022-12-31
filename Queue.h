@@ -2,50 +2,42 @@
 #define Queue_H
 
 template <class T> class Node {
+public:
   T m_value;
-  T *m_next;
+  Node<T> *m_next;
 };
 
 template <class T> class Queue {
-  Node<T> *head;
-
 public:
   Queue();
-  Queue(const T &Queue);
   ~Queue();
-  Queue &operator=(const T &Queue);
-
   bool pushBack(const Node<T> &element);
   T front();
   void popFront(); // we should change it later to return a referernce to the
                    // head of the updated Queue
   int size() const;
-};
 
-template <class T> Queue<T>::Queue<T> Queue<T> filter(const T &Queue);
-
-/*class Queue
-{
-public:
-Queue();
-~Queue();
 private:
-    T m_value;
-    Queue<T>* m_next;
+  Node<T> *m_queue;
+  int m_size;
 };
 
-template<class T>
-Queue<T>::Queue():
-    m_next(NULL)
-{}
+template <class T> Queue<T>::Queue() : m_queue(new Node<T>) {
+  m_queue->next = nullptr;
+}
 
-template<class T>
-Queue<T>::~Queue()
-{
-    while(m_next)
-    Queue<T> *to_delete=this;
+template <class T> Queue<T> filter(const Queue<T> &);
 
+template <class T> Queue<T> transform(const Queue<T> &);
 
-}*/
+// iterators
+
+template <class T> Queue<T>::~Queue() {
+  while (m_queue) {
+    Node<T> *to_delete = m_queue;
+    m_queue = m_queue->next;
+    delete to_delete;
+  }
+}
 
 #endif
