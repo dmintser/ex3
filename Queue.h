@@ -116,7 +116,7 @@ Queue<T> Queue<T>::filter(Condition c) const {
   Queue<T> result;
   for (const T &elem : *this)
     if (c(elem))
-      result.pushBack(*this); // replaced *it with *this
+      result.pushBack(*elem); // replaced *it with *elem
   return result;
 }
 
