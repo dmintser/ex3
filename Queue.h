@@ -155,8 +155,8 @@ template <class T> Queue<T> &Queue<T>::pushBack(const T &val) {
     throw;
   }
   newNode->m_value = val;
-  newNode->m_next = m_queue;
-  m_queue = newNode;
+  newNode->m_next = nullptr;
+  m_queue->m_next = newNode;
   m_size++;
   return *this;
 }
@@ -165,7 +165,9 @@ template <class T> Queue<T> &Queue<T>::popFront() {
   if (!m_size) {
     throw(Queue<T>::EmptyQueue());
   }
-  if (m_size == 1) {
+  Node<T> *to_delete = m_queue->m_next;
+  m_queue->m_next = to_delete->m_next;
+  /*if (m_size == 1) {
     Node<T> *to_delete = m_queue;
     m_queue = m_queue->m_next;
     delete to_delete;
@@ -177,7 +179,7 @@ template <class T> Queue<T> &Queue<T>::popFront() {
     ptr = ptr->m_next;
   }
   Node<T> *to_delete = ptr->m_next;
-  ptr->m_next = ptr->m_next->m_next;
+  ptr->m_next = ptr->m_next->m_next;*/
   delete to_delete;
   m_size--;
   return *this;
@@ -206,11 +208,14 @@ void transform(Queue<T> &queue1, Condition c) { // to be checked
 }
 
 template <class T> T &Queue<T>::front() {
-  Node<T> *ptr = m_queue;
+  if (!m_size) {
+    throw(Queue<T>::EmptyQueue());
+  }
+  /*Node<T> *ptr = m_queue;
   while (ptr->m_next->m_next) {
     ptr = ptr->m_next;
-  }
-  return ptr->m_value;
+  }*/
+  return m_queue->m_next->m_value;
 }
 
 template <class T> int Queue<T>::size() const { return m_size; }
