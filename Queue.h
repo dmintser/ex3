@@ -1,6 +1,7 @@
 #ifndef Queue_H
 #define Queue_H
 
+#include <iostream>
 #include <new>
 
 template <class T> class Node {
@@ -161,29 +162,30 @@ template <class T> Queue<T> &Queue<T>::pushBack(const T &val) {
 }
 
 template <class T> Queue<T> &Queue<T>::popFront() {
-  Node<T> *ptr = m_queue;
   if (!m_size) {
     throw(Queue<T>::EmptyQueue());
-  } else if (m_size == 1) {
+  }
+  if (m_size == 1) {
     Node<T> *to_delete = m_queue;
     m_queue = m_queue->m_next;
     delete to_delete;
     m_size--;
     return *this;
   }
-  while (ptr->m_next->m_next->m_next) {
+  Node<T> *ptr = m_queue;
+  while (ptr->m_next->m_next->m_next != nullptr) {
     ptr = ptr->m_next;
   }
   Node<T> *to_delete = ptr->m_next;
   ptr->m_next = ptr->m_next->m_next;
   delete to_delete;
-  // delete ptr;
+  m_size--;
   return *this;
 }
 
 template <class T, class Condition>
 Queue<T> filter(const Queue<T> &queue1, Condition c) {
-  Queue<T> result;
+  Queue<T> result = Queue<T>();
   for (const T &elem : queue1) {
     if (c(elem)) {
       result.pushBack(elem);
