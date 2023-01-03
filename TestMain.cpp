@@ -17,14 +17,15 @@ bool testExceptions();
 bool testConstQueue();
 } // namespace QueueTests
 
-std::function<bool()> testsList[] = {
-    /*HealthPointsTests::testInitialization,
-    HealthPointsTests::testArithmaticOperators,
-    HealthPointsTests::testComparisonOperators,
-    HealthPointsTests::testOutputOperator,*/
+std::function<bool()> testsList[] = {HealthPointsTests::testInitialization,
+                                     HealthPointsTests::testArithmaticOperators,
+                                     HealthPointsTests::testComparisonOperators,
+                                     HealthPointsTests::testOutputOperator,
 
-    QueueTests::testQueueMethods, QueueTests::testModuleFunctions,
-    QueueTests::testExceptions, QueueTests::testConstQueue};
+                                     QueueTests::testQueueMethods,
+                                     QueueTests::testModuleFunctions,
+                                     QueueTests::testExceptions,
+                                     QueueTests::testConstQueue};
 
 const int NUMBER_OF_TESTS = sizeof(testsList) / sizeof(std::function<bool()>);
 

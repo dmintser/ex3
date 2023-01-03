@@ -19,14 +19,22 @@ HealthPoints &HealthPoints::operator+=(const HealthPoints &hp1) {
 }
 
 HealthPoints operator+(const HealthPoints &hp1, const HealthPoints &hp2) {
-  HealthPoints result(hp1);
+  int max_hp_of_sum = std::min(hp1.m_maxHP, hp2.m_maxHP);
+  HealthPoints result(max_hp_of_sum);
+  result.m_hp = hp1.m_hp;
   return (result += hp2);
 }
 
-HealthPoints HealthPoints::operator-() const { return HealthPoints(-m_hp); }
+// HealthPoints HealthPoints::operator-() const { return HealthPoints(-m_hp); }
 
 HealthPoints &HealthPoints::operator-=(const HealthPoints &hp1) {
-  return *this += -hp1;
+  m_hp -= hp1.m_hp;
+  if (m_hp < MIN_HP) {
+    m_hp = MIN_HP;
+  } else if (m_hp > m_maxHP) {
+    m_hp = m_maxHP;
+  }
+  return *this;
 }
 
 HealthPoints operator-(const HealthPoints &hp1, const HealthPoints &hp2) {
