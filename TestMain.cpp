@@ -18,10 +18,10 @@ bool testConstQueue();
 } // namespace QueueTests
 
 std::function<bool()> testsList[] = {
-    /*HealthPointsTests::testInitialization,
+    HealthPointsTests::testInitialization,
     HealthPointsTests::testArithmaticOperators,
     HealthPointsTests::testComparisonOperators,
-    HealthPointsTests::testOutputOperator,*/
+    HealthPointsTests::testOutputOperator,
 
     QueueTests::testQueueMethods, QueueTests::testModuleFunctions,
     QueueTests::testExceptions, QueueTests::testConstQueue};

@@ -8,6 +8,11 @@ HealthPoints::HealthPoints(int max_points)
 }
 
 // arithmetic operators overloading
+HealthPoints &HealthPoints::operator=(const HealthPoints &hp1){
+  m_hp = hp1.m_hp;
+  m_maxHP = hp1.m_maxHP;
+  return *this;
+}
 HealthPoints &HealthPoints::operator+=(const HealthPoints &hp1) {
   m_hp += hp1.m_hp;
   if (m_hp < MIN_HP) {
@@ -18,19 +23,86 @@ HealthPoints &HealthPoints::operator+=(const HealthPoints &hp1) {
   return *this;
 }
 
-HealthPoints operator+(const HealthPoints &hp1, const HealthPoints &hp2) {
+HealthPoints &HealthPoints::operator+=(const int hp1) {
+  if(hp1 > 0){
+    return (*this += HealthPoints(hp1));
+  }
+  if(hp1 < 0){
+    return (*this -= HealthPoints(-hp1));
+  }
+  return *this;
+}
+
+HealthPoints operator+(const HealthPoints &hp1, const int hp2)
+{
+  if(hp2 == 0){
+    return hp1;
+  }
   HealthPoints result(hp1);
+  if(hp2 < 0)
+  {
+    return (result -= (-hp2)); //to check out
+  }
+  return(result += hp2);
+}
+
+HealthPoints operator+(const int hp1, const HealthPoints &hp2){
+  if(hp1 == 0){
+    return hp2;
+  }
+  HealthPoints result(hp2);
+  if(hp1 < 0)
+  {
+    return (result -= (-hp1)); // to check out
+  }
+  return(result += hp1);
+}
+
+HealthPoints operator+(const HealthPoints &hp1, const HealthPoints &hp2) {
+  int max_hp_of_sum = std::min(hp1.m_maxHP, hp2.m_maxHP);
+  HealthPoints result(max_hp_of_sum);
+  result.m_hp = hp1.m_hp;
   return (result += hp2);
 }
 
-HealthPoints HealthPoints::operator-() const { return HealthPoints(-m_hp); }
+// HealthPoints HealthPoints::operator-() const { return HealthPoints(-m_hp); }
 
 HealthPoints &HealthPoints::operator-=(const HealthPoints &hp1) {
-  return *this += -hp1;
+  m_hp -= hp1.m_hp;
+  if (m_hp < MIN_HP) {
+    m_hp = MIN_HP;
+  } else if (m_hp > m_maxHP) {
+    m_hp = m_maxHP;
+  }
+  return *this;
+}
+
+HealthPoints &HealthPoints::operator-=(const int hp1) {
+  if(hp1 > 0){
+    return (*this -= HealthPoints(hp1));
+  }
+  if(hp1 < 0){
+    return (*this += HealthPoints(-hp1));
+  }
+  return *this;
+}
+
+
+HealthPoints operator-(const HealthPoints &hp1, const int hp2)
+{
+  HealthPoints result(hp1);
+  return(result -= hp2);
+}
+
+HealthPoints operator-(const int hp1, const HealthPoints &hp2){
+  HealthPoints result(hp2);
+  return(result -= hp1);
 }
 
 HealthPoints operator-(const HealthPoints &hp1, const HealthPoints &hp2) {
-  HealthPoints result(hp1);
+  int max_hp_of_sum = std::min(hp1.m_maxHP, hp2.m_maxHP);
+  HealthPoints result(max_hp_of_sum);
+  result.m_hp = hp1.m_hp;
   return (result -= hp2);
 }
 

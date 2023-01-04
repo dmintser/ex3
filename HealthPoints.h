@@ -9,8 +9,11 @@ class HealthPoints {
 public:
   HealthPoints(int max_points = 100);
   HealthPoints &operator+=(const HealthPoints &);
-  HealthPoints operator-() const;
+  HealthPoints &operator+=(const int hp1);
+  // HealthPoints operator-() const;  
   HealthPoints &operator-=(const HealthPoints &);
+  HealthPoints &operator-=(const int hp1);
+  HealthPoints &operator=(const HealthPoints &);
   class InvalidArgument {};
 
 private:
@@ -20,11 +23,17 @@ private:
   friend bool operator==(const HealthPoints &, const HealthPoints &);
   friend bool operator<(const HealthPoints &, const HealthPoints &);
   friend std::ostream &operator<<(std::ostream &, const HealthPoints &);
+  friend HealthPoints operator+(const HealthPoints &, const HealthPoints &);
+  friend HealthPoints operator+(const HealthPoints &hp1, const int hp2);
+  friend HealthPoints operator+(const int hp1, const HealthPoints &hp2);
+  friend HealthPoints operator-(const HealthPoints &, const HealthPoints &);
+  friend HealthPoints operator-(const HealthPoints &hp1, const int hp2);
+  friend HealthPoints operator-(const int hp1, const HealthPoints &hp2);
   // class InvalidArgument {};
 };
 
-HealthPoints operator+(const HealthPoints &, const HealthPoints &);
-HealthPoints operator-(const HealthPoints &, const HealthPoints &);
+// HealthPoints operator+(const HealthPoints &, const HealthPoints &);
+//HealthPoints operator-(const HealthPoints &, const HealthPoints &);
 // HealthPoints operator-(const HealthPoints&);
 bool operator!=(const HealthPoints &, const HealthPoints &);
 bool operator>(const HealthPoints &, const HealthPoints &);
